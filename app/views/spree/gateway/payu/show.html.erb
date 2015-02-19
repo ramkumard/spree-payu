@@ -1,0 +1,29 @@
+<%# form_tag @gateway.preferred_url do -%>
+<% content_for :subheader do %>
+
+<% end %>
+
+<h1><%= image_tag "spinner.gif"%> Redirecting for payment ... </h1>
+<fieldset id="order_details" class="pg-redirect-od">
+  <div class="clear"></div>
+  <%= render :partial => 'spree/shared/order_details', :locals => {:order => @order} %>
+</fieldset>
+
+<form id="pay_form" action="<%= @gateway.preferred_url %>" method="post">
+  <%= hidden_field_tag 'key',      @gateway.preferred_account_id %>
+  <%= hidden_field_tag 'txnid',    @order.number %>
+  <%= hidden_field_tag 'firstname',    @order.ship_address.try(:full_name) %>
+  <%= hidden_field_tag 'amount',          @order.total.to_s %>
+  <%= hidden_field_tag 'productinfo',          "StyletagProduct" %>
+  <%= hidden_field_tag 'email',         (@order.email || @order.user.try(:email))  %>
+  <%= hidden_field_tag 'phone',           @order.ship_address.try(:phone)  %>
+  <%= hidden_field_tag 'surl',          "#{request.protocol}#{request.host_with_port}"+gateway_payu_comeback_path(@order) %>
+  <%= hidden_field_tag 'furl',          "#{request.protocol}#{request.host_with_port}"+gateway_payu_comeback_path(@order) %>
+  <%= hidden_field_tag 'hash',          @hash %>
+  <%= submit_tag t('ebsin_submit') %>
+</form>
+<script type="text/javascript">
+  setTimeout(function(){
+  document.getElementById("pay_form").submit();
+  }, 5000)
+</script>
