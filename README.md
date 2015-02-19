@@ -1,21 +1,17 @@
 SpreePayu
 =========
 
-Introduction goes here.
+Payu payment gateway Integration with spree.
 
 
 Example
 =======
 
-Example goes here.
+gem 'spree-payu', :git => 'git@github.com:ramkumard/spree-payu.git'
 
-Testing
--------
+$ bundle install
 
-Be sure to bundle your dependencies and then create a dummy test app for the specs to run against.
+$ rails g spree_payu:install
 
-    $ bundle
-    $ bundle exec rake test_app
-    $ bundle exec rspec spec
 
 Copyright (c) 2015 [name of extension creator], released under the New BSD License
